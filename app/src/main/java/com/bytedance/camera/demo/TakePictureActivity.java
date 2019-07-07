@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,9 @@ public class TakePictureActivity extends AppCompatActivity {
                     || ContextCompat.checkSelfPermission(TakePictureActivity.this,
                     Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 //todo 在这里申请相机、存储的权限
+                Intent takeVideoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if(takeVideoIntent.resolveActivity(getPackageManager())!= null)
+                    startActivity(new Intent(TakePictureActivity.this, CustomCameraActivity.class));
             } else {
                 takePicture();
             }
@@ -42,14 +46,14 @@ public class TakePictureActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            setPic();
+            setPic(requestCode,resultCode,data);
         }
     }
 
-    private void setPic() {
+    private void setPic(int requestCode, int resultCode, Intent data) {
         //todo 根据imageView裁剪
         //todo 根据缩放比例读取文件，生成Bitmap
-
+        Bundle extras = data.getExtras();
         //todo 如果存在预览方向改变，进行图片旋转
 
         //todo 如果存在预览方向改变，进行图片旋转

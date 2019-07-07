@@ -2,6 +2,7 @@ package com.bytedance.camera.demo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.btn_custom).setOnClickListener(v -> {
             //todo 在这里申请相机、麦克风、存储的权限
+            Intent takeVideoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if(takeVideoIntent.resolveActivity(getPackageManager())!= null)
             startActivity(new Intent(MainActivity.this, CustomCameraActivity.class));
-
         });
     }
 

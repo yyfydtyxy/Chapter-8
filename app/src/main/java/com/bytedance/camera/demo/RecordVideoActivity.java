@@ -3,7 +3,9 @@ package com.bytedance.camera.demo;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +28,9 @@ public class RecordVideoActivity extends AppCompatActivity {
             if (ContextCompat.checkSelfPermission(RecordVideoActivity.this,
                     Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 //todo 在这里申请相机、存储的权限
+                Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                if(takeVideoIntent.resolveActivity(getPackageManager())!= null)
+                    startActivity(new Intent(RecordVideoActivity.this, CustomCameraActivity.class));
             } else {
                 //todo 打开相机拍摄
             }
@@ -37,6 +42,7 @@ public class RecordVideoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             //todo 播放刚才录制的视频
+            Uri videoUri = intent.getData();
         }
     }
 
