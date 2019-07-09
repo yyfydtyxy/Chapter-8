@@ -1,4 +1,4 @@
-package com.bytedance.camera.demo.utils;
+package com.example.myapplication;
 
 
 import android.annotation.TargetApi;
